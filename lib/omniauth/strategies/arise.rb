@@ -20,7 +20,10 @@ module OmniAuth
 
 			info do
 			{
-
+				# Note that you'll need to require these info or you'll get nil
+				username: raw_info['get_identifiant'],
+				name:     raw_info['get_nom_complet'],
+				email:    raw_info['get_email'],
 			}
 			end
 
@@ -31,6 +34,10 @@ module OmniAuth
 			end
 
 			def raw_info
+				@raw_info ||= call_api
+			end
+
+			def call_api
 				data = []
 				options.consumer_options.each_with_index do |option, i|
 				data << {
